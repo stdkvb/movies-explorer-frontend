@@ -3,8 +3,8 @@ import './About.css';
 function About() {
   return (
     <section className='about'>
-      <div className='about__container'>
-        <h2 className='about__title'>О проекте</h2>
+      <div className='main__container'>
+        <h2 className='main__title'>О проекте</h2>
         <div className='about__text'>
           <div>
             <span className='about__subtitle'>Дипломный проект включал 5 этапов</span>

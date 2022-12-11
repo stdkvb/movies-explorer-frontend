@@ -5,7 +5,7 @@ import planet from '../../images/planet.svg';
 function Promo() {
   return (
     <section className='promo'>
-      <div className='promo__container'>
+      <div className='main__container'>
         <div className='promo__auth-bar'>
           <img className='promo__logo' src={logo} alt='лого' />
           <div>

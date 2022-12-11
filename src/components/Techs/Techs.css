@@ -1,0 +1,40 @@
+.techs {
+    background: #272727;
+    padding: 100px 0 100px 0;
+}
+
+.techs__title {
+    display: block;
+    margin-top: 90px;
+    text-align: center;
+    font-size: 50px;
+    line-height: 58px;
+}
+
+.techs__description {
+    display: block;
+    margin-top: 26px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.techs__list {
+    display: flex;
+    margin-top: 100px;
+    list-style: none;
+    justify-content: center;
+    gap: 10px;
+}
+
+.techs__item {
+    display: flex;
+    height: 60px;
+    width: 90px;
+    background: #303030;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 17px;
+    justify-content: center;
+    align-items: center;
+}

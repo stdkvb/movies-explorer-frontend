@@ -3,20 +3,6 @@
     padding: 110px 0 110px 0;
 }
 
-.about__container {
-    width: calc(100% - 140px);
-    margin: 0 auto 0 auto;
-}
-
-.about__title {
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 27px;
-    width: 100%;
-    margin: 0;
-    padding-bottom: 23px;
-    border-bottom: solid 1px #DADADA;
-}
 
 .about__text {
     display: flex;
@@ -26,7 +12,6 @@
 .about__subtitle {
     display: block;
     max-width: 550px;
-    font-weight: 400;
     font-size: 20px;
     line-height: 24px;
 }
@@ -35,7 +20,6 @@
     margin-top: 26px;
     display: block;
     max-width: 550px;
-    font-weight: 400;
     font-size: 14px;
     line-height: 20px;
 }
@@ -58,7 +42,6 @@
     align-items: center;
     justify-content: center;
     height: 36px;
-    font-weight: 400;
     font-size: 14px;
     background-color: #303030;
 }

@@ -1,0 +1,15 @@
+.main__title {
+    font-size: 22px;
+    line-height: 27px;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 23px;
+    border-bottom: solid 1px #DADADA;
+}
+
+.main__container {
+    width: calc(100% - 140px);
+    margin: 0 auto 0 auto;
+    display: flex;
+    flex-direction: column;
+}
