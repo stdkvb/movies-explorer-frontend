@@ -7,22 +7,22 @@ function About() {
         <h2 className='main__title'>О проекте</h2>
         <div className='about__text'>
           <div>
-            <span className='about__subtitle'>Дипломный проект включал 5 этапов</span>
-            <span className='about__description'>Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</span>
+            <p className='about__subtitle'>Дипломный проект включал 5 этапов</p>
+            <p className='about__description'>Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
           </div>
           <div>
-            <span className='about__subtitle'>На выполнение диплома ушло 5 недель</span>
-            <span className='about__description'>У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</span>
+            <p className='about__subtitle'>На выполнение диплома ушло 5 недель</p>
+            <p className='about__description'>У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
           </div>
         </div>
         <div className='about__timeline'>
           <div className='about__timeline-column'>
-            <div className='about__timeline-top about__timeline-top_colored'>1 неделя</div>
-            <span className='about__timeline-bottom'>backend</span>
+            <p className='about__timeline-top about__timeline-top_colored'>1 неделя</p>
+            <p className='about__timeline-bottom'>Back-end</p>
           </div>
           <div className='about__timeline-column'>
-            <span className='about__timeline-top'>4 недели</span>
-            <span className='about__timeline-bottom'>frontend</span>
+            <p className='about__timeline-top'>4 недели</p>
+            <p className='about__timeline-bottom'>Front-end</p>
           </div>
         </div>
       </div>

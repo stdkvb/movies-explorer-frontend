@@ -5,8 +5,8 @@ function Techs() {
     <section className='techs'>
       <div className='main__container'>
         <h2 className='main__title'>Технологии</h2>
-        <span className='techs__title'>7 технологий</span>
-        <span className='techs__description'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</span>
+        <p className='techs__title'>7 технологий</p>
+        <p className='techs__description'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
         <ul className='techs__list'>
           <li className="techs__item">HTML</li>
           <li className="techs__item">CSS</li>

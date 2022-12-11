@@ -14,10 +14,11 @@
     max-width: 550px;
     font-size: 20px;
     line-height: 24px;
+    margin: 0;
 }
 
 .about__description {
-    margin-top: 26px;
+    margin: 26px 0 0 0;
     display: block;
     max-width: 550px;
     font-size: 14px;
@@ -44,6 +45,7 @@
     height: 36px;
     font-size: 14px;
     background-color: #303030;
+    margin: 0;
 }
 
 .about__timeline-top_colored {
@@ -56,5 +58,5 @@
     font-size: 14px;
     line-height: 17px;
     color: #8B8B8B;
-    margin-top: 14px;
+    margin: 14px 0 0 0;
 }

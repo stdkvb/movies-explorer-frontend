@@ -16,7 +16,7 @@ function Promo() {
         <div className='promo__content'>
           <div>
             <h1 className='promo__title'>Учебный проект студента факультета Веб-разработки.</h1>
-            <span className='promo__subtitle'>Листайте ниже, чтобы узнать больше про этот проект и его создателя.</span>
+            <p className='promo__subtitle'>Листайте ниже, чтобы узнать больше про этот проект и его создателя.</p>
           </div>
           <img className='promo__image' src={planet} alt='' />
         </div>

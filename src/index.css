@@ -2,4 +2,7 @@
 @import './vendor/fonts/fonts.css';
 @import './components/App/App.css';
 @import './components/Main/Main.css';
-@import './components/Promo/Promo.css'
+@import './components/Promo/Promo.css';
+@import './components/About/About.css';
+@import './components/Techs/Techs.css';
+@import './components/Student/Student.css';
