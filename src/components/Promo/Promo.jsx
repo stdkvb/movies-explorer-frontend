@@ -1,4 +1,3 @@
-import './Promo.css';
 import logo from '../../images/logo.svg';
 import planet from '../../images/planet.svg';
 

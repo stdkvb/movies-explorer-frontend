@@ -1,4 +1,3 @@
-import './Student.css';
 import photo from '../../images/photo.png';
 
 function Student() {

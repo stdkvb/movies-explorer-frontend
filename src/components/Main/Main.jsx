@@ -1,8 +1,8 @@
-import './Main.css';
 import Promo from '../Promo/Promo';
 import About from '../About/About';
 import Techs from '../Techs/Techs';
 import Student from '../Student/Student';
+import Portfolio from '../Portfolio/Portfolio';
 
 function Main() {
   return (
@@ -11,6 +11,7 @@ function Main() {
       <About />
       <Techs />
       <Student />
+      <Portfolio />
     </>
   );
 }
