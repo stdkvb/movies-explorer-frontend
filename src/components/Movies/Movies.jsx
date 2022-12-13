@@ -1,8 +1,8 @@
+import SearchForm from '../SearchForm/SearchForm';
+
 function Movies() {
   return (
-    <section className='movies'>
-      <div />
-    </section>
+    <SearchForm />
   );
 }
 
