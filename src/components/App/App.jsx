@@ -7,18 +7,18 @@ import Header from '../Header/Header';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path='/'>
-        <Header />
-        <Main />
-        <Footer />
-      </Route>
-      <Route exact path='/movies'>
-        <Header />
-        <Movies />
-        <Footer />
-      </Route>
-    </Switch>
+    <>
+      <Header />
+      <Switch>
+        <Route exact path='/'>
+          <Main />
+        </Route>
+        <Route exact path='/movies'>
+          <Movies />
+        </Route>
+      </Switch>
+      <Footer />
+    </>
   );
 }
 
