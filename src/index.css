@@ -11,3 +11,5 @@
 @import './components/Movies/Movies.css';
 @import './components/SearchForm/SearchForm.css';
 @import './components/Footer/Footer.css';
+@import './components/MoviesCardList/MoviesCardList.css';
+@import './components/Card/Card.css';
