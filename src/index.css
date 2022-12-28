@@ -2,6 +2,7 @@
 @import './vendor/fonts/fonts.css';
 @import './components/App/App.css';
 @import './components/Header/Header.css';
+@import './components/NavTab/NavTab.css';
 @import './components/Main/Main.css';
 @import './components/Promo/Promo.css';
 @import './components/About/About.css';

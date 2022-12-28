@@ -1,0 +1,26 @@
+.nav__button {
+    height: 32px;
+    min-width: 76px;
+    border-radius: 3px;
+    background: transparent;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    border: none;
+    color: #FFFFFF;
+}
+
+.nav__button:hover {
+    cursor: pointer;
+}
+
+.nav__button_green {
+    margin-left: 30px;
+    background-color: #3DDC84;
+}
+
+.nav__button_grey {
+    margin-left: 50px;
+    border-radius: 20px;
+    background-color: #313131;
+}
