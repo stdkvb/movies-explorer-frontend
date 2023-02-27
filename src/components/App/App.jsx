@@ -6,12 +6,14 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import ErrorPage from '../ErrorPage/ErrorPage';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
 function App() {
   return (
     <>
+      <ErrorPage />
       <Register />
       <Login />
       <Header />
