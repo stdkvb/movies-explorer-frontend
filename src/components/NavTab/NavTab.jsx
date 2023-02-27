@@ -24,6 +24,13 @@ function NavTab() {
           <button className='nav__button nav__button_grey' type='button'>Аккаунт</button>
         </nav>
       </Route>
+      <Route exact path='/profile'>
+        <nav>
+          <button className='nav__button' type='button'>Фильмы</button>
+          <button className='nav__button' type='button'>Сохраненные фильмы</button>
+          <button className='nav__button nav__button_grey' type='button'>Аккаунт</button>
+        </nav>
+      </Route>
     </Switch>
   );
 }
