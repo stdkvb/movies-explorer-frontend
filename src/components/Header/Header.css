@@ -8,11 +8,14 @@
 }
 
 .header__container {
+    box-sizing: border-box;
+    max-width: 1140px;
+    min-height: 74px;
+    width: calc(100% - 140px);
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: calc(100% - 140px);
-    margin: 0 auto 0 auto;
 }
 
 .header__logo {
