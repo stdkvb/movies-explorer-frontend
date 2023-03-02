@@ -16,11 +16,11 @@ function App() {
         <Route index element={<Main />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/profile" element={<Profile />} />
       </Route>
+      <Route path="/profile" element={<Profile />} />
       <Route path="/sign-in" element={<Login />} />
       <Route path="/sign-up" element={<Register />} />
-      <Route path="/not-found" element={<ErrorPage />} />
+      <Route path="/error-page" element={<ErrorPage />} />
     </Routes>
   );
 }
