@@ -6,6 +6,7 @@
 .about__text {
     display: flex;
     margin-top: 70px;
+    gap: 30px;
 }
 
 .about__subtitle {
@@ -58,4 +59,17 @@
     line-height: 17px;
     color: #8B8B8B;
     margin: 14px 0 0 0;
+}
+
+@media screen and (max-width: 992px) {
+  .about {
+    padding: 90px 0 90px 0;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .about__text {
+   flex-direction: column;
+   gap: 56px;
+  }
 }

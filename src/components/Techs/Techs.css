@@ -20,6 +20,7 @@
 }
 
 .techs__list {
+    padding: 0;
     display: flex;
     margin-top: 100px;
     list-style: none;
@@ -37,4 +38,30 @@
     line-height: 17px;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 992px) {
+  .techs {
+    padding: 90px 0 90px 0;
+  }
+
+  .techs__list {
+    flex-wrap: wrap;
+    margin-top: 50px;
+  }
+
+  .techs__title {
+    margin-top: 60px;
+    font-size: 30px;
+    line-height: 36px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .techs__title {
+    margin-top: 60px;
+  }
+  .techs {
+    padding: 70px 0 70px 0;
+  }
 }

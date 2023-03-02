@@ -1,6 +1,7 @@
 .footer {
     padding: 79px 0 20px 0;
     width: calc(100% - 140px);
+    max-width: 1140px;
     margin: 0 auto 0 auto;
 }
 
@@ -35,4 +36,22 @@
 .footer__link {
     text-decoration: none;
     color: #FFFFFF;
+}
+
+@media screen and (max-width: 575px) {
+  .footer__text {
+    margin-bottom: 30px;
+  }
+
+  .footer__bar {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .footer__links {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 12px;
+  }
 }

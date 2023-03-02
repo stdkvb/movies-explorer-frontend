@@ -1,5 +1,5 @@
 .student {
-    padding: 110px 0 125px 0;
+    padding: 110px 0 0 0;
 }
 
 .student__container {
@@ -41,4 +41,40 @@
 .student__photo {
     max-width: 270px;
     max-height: 327px;
+}
+
+@media screen and (max-width: 992px) {
+  .student {
+    padding: 90px 0 90px 0;
+  }
+
+  .student__name {
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .student {
+    padding: 70px 0 70px 0;
+  }
+
+  .student__container {
+    flex-direction: column-reverse;
+  }
+
+  .student__photo {
+    width: 100%;
+    max-width: unset;
+    max-height: unset;
+  }
+
+  .student__name {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .student__link {
+    margin-top: 40px;
+  }
 }

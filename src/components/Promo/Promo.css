@@ -52,3 +52,38 @@
     width: 310px;
     height: 304px;
 }
+
+@media screen and (max-width: 992px) {
+  .main__container {
+    align-items: center;
+  }
+  .promo__content {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+  }
+
+  .promo__title {
+    margin-top: 48px;
+  }
+
+  .promo__subtitle {
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .promo {
+    padding: 70px 0 30px 0;
+  }
+
+  .promo__title {
+    margin-top: 44px;
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  .promo__subtitle {
+    font-size: 13px;
+  }
+}

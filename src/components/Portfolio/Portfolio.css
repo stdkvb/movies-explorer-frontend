@@ -32,3 +32,32 @@
     width: 29px;
     height: 60px;
 }
+
+@media screen and (max-width: 992px) {
+  .portfolio {
+    padding: 0 0 90px 0;
+  }
+  .portfolio__item {
+    width: 100%;
+  }
+
+  .portfolio__link {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .portfolio {
+    padding: 0 0 70px 0;
+  }
+
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__link-icon {
+    width: 18px;
+    height: 28px;
+  }
+}
