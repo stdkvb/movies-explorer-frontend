@@ -1,8 +1,6 @@
 .header__menu-navigation {
   display: flex;
   justify-content: space-between;
-  margin-left: 100%;
-  margin-right: 50px;
 }
 
 .header__button-navigation {

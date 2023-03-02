@@ -1,14 +1,15 @@
-import { useLocation } from 'react-router-dom';
-import Navigation from '../Navigation/Navigation';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../../images/logo.svg';
+import Navigation from '../Navigation/Navigation';
 
 function Header() {
-  const path = useLocation().pathname;
+  const pathName = useLocation().pathname;
 
   return (
-    <header className={path === '/' ? 'header_blue' : 'header'}>
-      <div className='header__container'>
-        <img className='header__logo' src={logo} alt='лого' />
+    <header className={pathName === '/' ? 'header_blue' : 'header'}>
+      <div className="header__wrapper">
+        <Link to="/" className="logo header__link-logo"><img src={logo} alt="Лого" /></Link>
         <Navigation />
       </div>
     </header>
