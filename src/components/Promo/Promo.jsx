@@ -1,6 +1,13 @@
 import planet from '../../images/planet.svg';
 
 function Promo() {
+  const handleAnchorScroll = (event) => {
+    event.preventDefault();
+    document.querySelector('#about').scrollIntoView({
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <section className='promo'>
       <div className='main__container'>
@@ -11,7 +18,7 @@ function Promo() {
           </div>
           <img className='promo__image' src={planet} alt='' />
         </div>
-        <button className='promo__button promo__button_bordered' type='button'>Узнать больше</button>
+        <button className='promo__button promo__button_bordered' type='button' onClick={handleAnchorScroll}>Узнать больше</button>
       </div>
     </section>
   );
