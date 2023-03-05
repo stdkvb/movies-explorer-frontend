@@ -1,31 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import Card from '../Card/Card';
-import moviesApi from '../../utils/MoviesApi';
 import Preloader from '../Preloader/Preloader';
 
-function MoviesCardList() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const isLimit = useLocation().pathname === '/movies' ? 7 : 3;
-
-  const handleSearchSubmit = () => {
-    setLoading(true);
-    moviesApi.getMovies()
-      .then((movies) => {
-        setMovies(movies);
-      })
-      .catch(() => {
-        console.log('Ошибка');
-      })
-      .finally(() => setLoading(false));
-  };
-
-  useEffect(() => {
-    handleSearchSubmit();
-  }, []);
-
+function MoviesCardList({ movies, loading, isLimit }) {
   if (loading) {
     return <Preloader />;
   }
