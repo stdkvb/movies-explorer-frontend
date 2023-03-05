@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import loupe from '../../images/loupe.svg';
 import find from '../../images/find.svg';
 
-function SearchForm({ onSearchSubmit }) {
+function SearchForm({ onSearchSubmit, onHandleCheck, shortChecked }) {
   const [search, setSearch] = useState('');
 
   const handleChangeSearch = (event) => {
@@ -22,7 +22,7 @@ function SearchForm({ onSearchSubmit }) {
         <button className='search__button' type='submit'><img src={find} alt='' /></button>
       </form>
       <label className='search__filter' htmlFor='filter'>
-        <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' />
+        <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' onClick={onHandleCheck} defaultChecked={shortChecked} />
         Короткометражки
       </label>
     </section>

@@ -12,6 +12,8 @@ function Movies() {
   const [notFound, setNotFound] = useState(false);
   const [errorText, setErrorText] = useState('Что-то пошло не так');
   const [limit, setLimit] = useState(0);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [shortChecked, setShortChecked] = useState(false);
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -26,9 +28,54 @@ function Movies() {
 
   const addMovies = () => setLimit(limit * 2);
 
+  useEffect(() => {
+    setLoading(true);
+    moviesApi.getMovies()
+      .then((response) => {
+        setMovies(response);
+        setFilteredMovies(response);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+        setErrorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+    if (savedMovies) {
+      setNoSearch(false);
+      setFoundMovie(savedMovies);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('savedChecked') === 'true') {
+      setShortChecked(true);
+    } else {
+      setShortChecked(false);
+    }
+  }, []);
+
+  const handleShortFilter = (event) => {
+    setShortChecked(event.target.checked);
+    localStorage.setItem('savedChecked', event.target.checked);
+  };
+
+  useEffect(() => {
+    if (shortChecked) {
+      const shortMovies = movies.filter((movie) => movie.duration <= 40);
+      setFilteredMovies(shortMovies);
+    } else {
+      setFilteredMovies(movies);
+    }
+  }, [shortChecked, movies]);
+
   const handleSearchSubmit = (query) => {
     setNoSearch(false);
-    const sortedMovie = movies.filter((item) => {
+    const sortedMovie = filteredMovies.filter((item) => {
       const value = query.toLowerCase().trim();
       const movieRu = item.nameRU.toLowerCase().trim();
       const movieEn = item.nameEN.toLowerCase().trim();
@@ -45,28 +92,12 @@ function Movies() {
     console.log(foundMovie);
   };
 
-  useEffect(() => {
-    setLoading(true);
-    moviesApi.getMovies()
-      .then((response) => {
-        setMovies(response);
-      })
-      .catch(() => {
-        setErrorText('Проблема с соединением');
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    setNoSearch(false);
-    console.log(JSON.parse(localStorage.getItem('savedMovies')));
-    setFoundMovie(JSON.parse(localStorage.getItem('savedMovies')));
-  }, []);
-
   return (
     <>
       <SearchForm
         onSearchSubmit={handleSearchSubmit}
+        onHandleCheck={handleShortFilter}
+        shortChecked={shortChecked}
       />
       {!noSearch && (
         <MoviesCardList
