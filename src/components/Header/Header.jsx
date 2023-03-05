@@ -7,7 +7,7 @@ function Header() {
   const pathName = useLocation().pathname;
 
   return (
-    <header className={pathName === '/' ? 'header_blue' : 'header'}>
+    <header className={pathName === '/' ? 'header header_blue' : 'header'}>
       <div className="header__wrapper">
         <Link to="/" className="logo header__link-logo"><img src={logo} alt="Лого" /></Link>
         <Navigation />

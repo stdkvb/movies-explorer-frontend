@@ -36,7 +36,7 @@ function NavTab() {
         </ul>
       </nav>
       <Link to="/profile" className={`header__profile ${isOpenMenu && 'header__profile_is-active'}`}>
-        <p className="profile__name">Аккаунт</p>
+        <p className="header__profile-name">Аккаунт</p>
       </Link>
       <div role="presentation" onClick={handleBurgerClick} className={`header__burger burger ${isOpenMenu && 'burger_is-active'}`}>
         <span className={`burger__middle-line ${isOpenMenu ? 'burger__middle-line_is-active' : ''}`} />

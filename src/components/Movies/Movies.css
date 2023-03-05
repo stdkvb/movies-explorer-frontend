@@ -1,4 +1,4 @@
-.movies__more-button {
+.movies-more-button {
     display: block;
     margin: 50px auto 80px auto;
     height: 36px;
@@ -13,6 +13,6 @@
     text-align: center;
 }
 
-.movies__more-button:hover {
+.movies-more-button:hover {
     cursor: pointer;
 }

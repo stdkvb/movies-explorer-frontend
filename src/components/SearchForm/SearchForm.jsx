@@ -4,13 +4,13 @@ import find from '../../images/find.svg';
 function SearchForm() {
   return (
     <section className='search'>
-      <div className='search__bar'>
+      <form className='search__bar'>
         <img className='search__icon' src={loupe} alt='' />
-        <input className='search__input' placeholder='Фильм' />
-        <button className='search__button' type='button'><img src={find} alt='' /></button>
-      </div>
+        <input className='search__input' placeholder='Фильм' required />
+        <button className='search__button' type='submit'><img src={find} alt='' /></button>
+      </form>
       <label className='search__filter' htmlFor='filter'>
-        <input className='search__filter-checkbox' name='filter' type='checkbox' />
+        <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' />
         Короткометражки
       </label>
     </section>

@@ -9,16 +9,27 @@
     color: #8B8B8B;
 }
 
+.portfolio__list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
 .portfolio__item {
     border-bottom: solid 1px #424242;
-    display: flex;
-    justify-content: space-between;
+
     margin-top: 20px;
     height: 70px;
 }
 
 .portfolio__item:last-of-type {
     border: none;
+}
+
+.portfolio__link {
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
 }
 
 .portfolio__link {

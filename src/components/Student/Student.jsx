@@ -16,7 +16,7 @@ function Student() {
               «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься
               фриланс-заказами и ушёл с постоянной работы.
             </p>
-            <a className='student__link' href='https://github.com/stdkvb'>Github</a>
+            <a className='student__link' href='https://github.com/stdkvb' target="_blank" rel="noreferrer">Github</a>
           </div>
           <img className='student__photo' src={photo} alt='фото' />
         </div>
