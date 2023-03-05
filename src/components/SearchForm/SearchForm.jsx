@@ -9,6 +9,7 @@ function SearchForm() {
         <input className='search__input' placeholder='Фильм' required />
         <button className='search__button' type='submit'><img src={find} alt='' /></button>
       </form>
+      <span className="search__error">Нужно ввести ключевое слово</span>
       <label className='search__filter' htmlFor='filter'>
         <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' />
         Короткометражки
