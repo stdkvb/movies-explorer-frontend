@@ -1,0 +1,30 @@
+.header {
+  box-sizing: border-box;
+}
+
+.header_blue {
+  background: #073042;
+}
+
+.header__wrapper {
+  box-sizing: border-box;
+  max-width: 1140px;
+  min-height: 74px;
+  width: calc(100% - 140px);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 995px) {
+  .header__wrapper {
+    width: calc(100% - 60px);
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .header__wrapper {
+    width: calc(100% - 20px);
+  }
+}

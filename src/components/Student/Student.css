@@ -1,0 +1,80 @@
+.student {
+    padding: 110px 0 0 0;
+}
+
+.student__container {
+    margin-top: 66px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.student__text {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.student__name {
+    margin: 0;
+    font-size: 50px;
+    line-height: 58px;
+}
+
+.student__about {
+    margin: 18px 0 0 0;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.student__description {
+    margin: 26px 0 0 0;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.student__link {
+    margin-top: 99px;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.student__photo {
+    max-width: 270px;
+    max-height: 327px;
+}
+
+@media screen and (max-width: 992px) {
+  .student {
+    padding: 90px 0 90px 0;
+  }
+
+  .student__name {
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .student {
+    padding: 70px 0 70px 0;
+  }
+
+  .student__container {
+    flex-direction: column-reverse;
+  }
+
+  .student__photo {
+    width: 100%;
+    max-width: unset;
+    max-height: unset;
+  }
+
+  .student__name {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .student__link {
+    margin-top: 40px;
+  }
+}

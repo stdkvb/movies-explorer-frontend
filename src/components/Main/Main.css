@@ -1,0 +1,28 @@
+.main__title {
+    font-size: 22px;
+    line-height: 27px;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 23px;
+    border-bottom: solid 1px #DADADA;
+}
+
+.main__container {
+    width: calc(100% - 140px);
+    max-width: 1140px;
+    margin: 0 auto 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 992px) {
+  .main__container {
+    width: calc(100% - 100px);
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .main__container {
+    width: calc(100% - 36px);
+  }
+}

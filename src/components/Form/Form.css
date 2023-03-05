@@ -1,0 +1,141 @@
+.form__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 396px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 232px 20px;
+}
+
+.form__title {
+  font-size: 24px;
+  line-height: 1.2;
+  margin: 40px 0;
+  font-weight: 500;
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+  font-weight: 500;
+  font-style: normal;
+  flex: 1;
+}
+
+.form-body__label {
+  display: flex;
+  flex-direction: column;
+  color: #8B8B8B;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.form-body__label:last-of-type {
+  margin: 0 0 59px;
+}
+
+.form-body__input {
+  border: none;
+  padding: 15px;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #FFFFFF;
+  transition: border-color 0.7s;
+  background: #2F2F2F;
+  border-radius: 8px;
+}
+
+.form-body__input:focus-visible {
+  outline: none;
+}
+
+.form-body__input_incorrect {
+  color: #ee3465;
+}
+
+.form-body__error {
+  visibility: hidden;
+  color: #ee3465;
+  margin: 6px 0 0;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.form-body__error_is-active {
+  visibility: inherit;
+}
+
+.form-body__button {
+  background-color: #4285F4;
+  border-radius: 3px;
+  color: white;
+  font-size: 14px;
+  line-height: 1.2;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 45px;
+  cursor: pointer;
+  transition: opacity 0.6s;
+}
+
+.form-body__button:hover {
+  opacity: 0.8;
+}
+
+.form-body__button_inactive {
+  display: none;
+}
+
+.form__text {
+  font-size: 14px;
+  line-height: 1.2;
+  color: #a0a0a0;
+  text-align: center;
+  margin: 16px 0 0;
+}
+
+.navigation-link {
+  color: #4285F4;
+  text-decoration: none;
+  transition: opacity 0.6s;
+}
+
+.navigation-link:hover {
+  opacity: 0.7;
+}
+
+.form__link {
+  margin: 0 0 0 6px;
+}
+
+@media screen and (max-width: 1280px) {
+  .form__wrapper {
+    padding: 70px 20px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .form__wrapper {
+    padding: 232px 20px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .form__wrapper {
+    padding: 56px 20px 30px;
+  }
+
+  .logo_template {
+    margin: 0 auto;
+  }
+
+  .form__title {
+    text-align: center;
+    margin: 50px 0 80px;
+  }
+}
