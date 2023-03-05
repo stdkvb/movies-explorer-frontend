@@ -5,15 +5,87 @@ import moviesApi from '../../utils/MoviesApi';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 function Movies() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [noSearch, setNoSearch] = useState(true);
-  const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
-  const [foundMovie, setFoundMovie] = useState([]);
+  const [allMovies, setAllMovies] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [errorText, setErrorText] = useState('Что-то пошло не так');
   const [limit, setLimit] = useState(0);
   const [shortChecked, setShortChecked] = useState(false);
+
+  const getShortMovies = (movies) => movies.filter((movie) => movie.duration <= 40);
+
+  useEffect(() => {
+    if (localStorage.getItem('savedChecked') === 'true') {
+      setShortChecked(true);
+    } else {
+      setShortChecked(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchResult.length === 0) {
+      setNotFound(true);
+      setErrorText('Ничего не найдено');
+    }
+  }, [searchResult]);
+
+  useEffect(() => {
+    setNotFound(false);
+    setNoSearch(false);
+    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+
+    if (shortChecked) {
+      setSearchResult(getShortMovies(savedMovies));
+    } else {
+      setSearchResult(savedMovies);
+    }
+  }, [shortChecked]);
+
+  const handleShortFilter = () => {
+    setShortChecked(!shortChecked);
+    localStorage.setItem('savedChecked', !shortChecked);
+  };
+
+  const checkShortFilter = (movies) => {
+    if (shortChecked) {
+      return getShortMovies(movies);
+    }
+    return movies;
+  };
+  const getFoundMovies = (preparedFilms, query) => preparedFilms.filter((item) => {
+    const value = query.toLowerCase().trim();
+    const movieRu = item.nameRU.toLowerCase().trim();
+    const movieEn = item.nameEN.toLowerCase().trim();
+    return (movieRu.includes(value) || movieEn.includes(value)) && item;
+  });
+
+  const handleSortedMovies = (movies, query) => {
+    const foundMovies = getFoundMovies(movies, query);
+    localStorage.setItem('savedMovies', JSON.stringify(foundMovies));
+    const checkedMovies = checkShortFilter(foundMovies);
+    setSearchResult(checkedMovies);
+  };
+
+  const handleSearchSubmit = (query) => {
+    setNoSearch(false);
+    setNotFound(false);
+    if (allMovies.length === 0) {
+      setLoading(true);
+      moviesApi.getMovies()
+        .then((movies) => {
+          setAllMovies(movies);
+          handleSortedMovies(movies, query);
+        })
+        .catch(() => {
+          setErrorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        })
+        .finally(() => setLoading(false));
+    } else {
+      handleSortedMovies(allMovies, query);
+    }
+  };
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -27,64 +99,7 @@ function Movies() {
   }, [width]);
 
   const addMovies = () => setLimit(limit * 2);
-  useEffect(() => {
-    setLoading(true);
-    moviesApi.getMovies()
-      .then((response) => {
-        setMovies(response);
-        setFilteredMovies(response);
-      })
-      .catch(() => {
-        setErrorText('Проблема с соединением или сервер недоступен.');
-      })
-      .finally(() => setLoading(false));
-  }, []);
-  useEffect(() => {
-    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-    if (savedMovies) {
-      setNoSearch(false);
-      setFoundMovie(savedMovies);
-    }
-  }, []);
-  useEffect(() => {
-    if (localStorage.getItem('savedChecked') === 'true') {
-      setShortChecked(true);
-    } else {
-      setShortChecked(false);
-    }
-  }, []);
-  const handleShortFilter = (event) => {
-    setShortChecked(event.target.checked);
-    localStorage.setItem('savedChecked', event.target.checked);
-  };
-  useEffect(() => {
-    if (shortChecked) {
-      const shortMovies = movies.filter((movie) => movie.duration <= 40);
-      setFilteredMovies(shortMovies);
-    } else {
-      setFilteredMovies(movies);
-    }
-  }, [shortChecked, movies]);
 
-  const handleSearchSubmit = (query) => {
-    setNoSearch(false);
-    const sortedMovie = filteredMovies.filter((item) => {
-      const value = query.toLowerCase().trim();
-      const movieRu = item.nameRU.toLowerCase().trim();
-      const movieEn = item.nameEN.toLowerCase().trim();
-      return (movieRu.includes(value) || movieEn.includes(value)) && item;
-    });
-    if (sortedMovie.length === 0) {
-      setNotFound(true);
-      setErrorText('Ничего не найдено');
-      localStorage.setItem('savedMovies', JSON.stringify(sortedMovie));
-      return;
-    }
-
-    localStorage.setItem('savedMovies', JSON.stringify(sortedMovie));
-    setNotFound(false);
-    setFoundMovie(sortedMovie);
-  };
   return (
     <>
       <SearchForm
@@ -94,7 +109,7 @@ function Movies() {
       />
       {!noSearch && (
         <MoviesCardList
-          movies={foundMovie}
+          movies={searchResult}
           loading={loading}
           notFound={notFound}
           errorText={errorText}

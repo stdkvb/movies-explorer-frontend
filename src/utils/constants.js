@@ -1,3 +1,7 @@
-const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies';
+const MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
+const BASE_URL = 'https://api.explorer-movies.nomoredomains.club';
 
-export { BASE_URL };
+export {
+  MOVIES_URL,
+  BASE_URL,
+};

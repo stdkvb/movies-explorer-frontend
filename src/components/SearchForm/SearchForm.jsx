@@ -45,7 +45,7 @@ function SearchForm({ onSearchSubmit, onHandleCheck, shortChecked }) {
         <button className='search__button' type='submit'><img src={find} alt='' /></button>
       </form>
       <label className='search__filter' htmlFor='filter'>
-        <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' onClick={onHandleCheck} defaultChecked={shortChecked} />
+        <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' onClick={onHandleCheck} checked={shortChecked} />
         Короткометражки
       </label>
     </section>
