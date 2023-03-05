@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 
 function Card({ name, duration, images }) {
@@ -14,11 +13,5 @@ function Card({ name, duration, images }) {
     </div>
   );
 }
-
-Card.propTypes = {
-  name: PropTypes.string.isRequired,
-  duration: PropTypes.string.isRequired,
-  images: PropTypes.string.isRequired,
-};
 
 export default Card;
