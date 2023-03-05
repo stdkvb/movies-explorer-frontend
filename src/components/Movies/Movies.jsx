@@ -8,26 +8,25 @@ function Movies() {
   const [loading, setLoading] = useState(true);
   const [noSearch, setNoSearch] = useState(true);
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [foundMovie, setFoundMovie] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [errorText, setErrorText] = useState('Что-то пошло не так');
   const [limit, setLimit] = useState(0);
-  const [filteredMovies, setFilteredMovies] = useState([]);
   const [shortChecked, setShortChecked] = useState(false);
   const { width } = useWindowDimensions();
 
   useEffect(() => {
-    if (width <= 1280 && width > 800) {
-      setLimit(7);
-    } else if (width <= 800 && width > 400) {
+    if (width <= 800 && width > 400) {
       setLimit(3);
     } else if (width <= 400) {
       setLimit(5);
+    } else {
+      setLimit(7);
     }
   }, [width]);
 
   const addMovies = () => setLimit(limit * 2);
-
   useEffect(() => {
     setLoading(true);
     moviesApi.getMovies()
@@ -35,14 +34,11 @@ function Movies() {
         setMovies(response);
         setFilteredMovies(response);
       })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error);
-        setErrorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+      .catch(() => {
+        setErrorText('Проблема с соединением или сервер недоступен.');
       })
       .finally(() => setLoading(false));
   }, []);
-
   useEffect(() => {
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
     if (savedMovies) {
@@ -50,7 +46,6 @@ function Movies() {
       setFoundMovie(savedMovies);
     }
   }, []);
-
   useEffect(() => {
     if (localStorage.getItem('savedChecked') === 'true') {
       setShortChecked(true);
@@ -58,12 +53,10 @@ function Movies() {
       setShortChecked(false);
     }
   }, []);
-
   const handleShortFilter = (event) => {
     setShortChecked(event.target.checked);
     localStorage.setItem('savedChecked', event.target.checked);
   };
-
   useEffect(() => {
     if (shortChecked) {
       const shortMovies = movies.filter((movie) => movie.duration <= 40);
@@ -87,12 +80,11 @@ function Movies() {
       localStorage.setItem('savedMovies', JSON.stringify(sortedMovie));
       return;
     }
+
     localStorage.setItem('savedMovies', JSON.stringify(sortedMovie));
     setNotFound(false);
     setFoundMovie(sortedMovie);
-    console.log(foundMovie);
   };
-
   return (
     <>
       <SearchForm
@@ -113,5 +105,4 @@ function Movies() {
     </>
   );
 }
-
 export default Movies;
