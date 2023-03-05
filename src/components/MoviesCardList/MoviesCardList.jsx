@@ -4,20 +4,20 @@ import Preloader from '../Preloader/Preloader';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 function MoviesCardList({
-  movies, loading, isLimit, notFound, errorText,
+  movies, loading, notFound, errorText, isError, limit, onAddFilms,
 }) {
   if (loading) {
     return <Preloader />;
   }
   if (notFound) {
-    return <InfoTooltip errorText={errorText} />;
+    return <InfoTooltip errorText={errorText} isError={isError} />;
   }
 
   return (
     <section className="movies">
       <div className="movies__wrapper">
         <ul className="movies__list">
-          {movies.slice(0, isLimit).map((movie) => (
+          {movies.slice(0, limit).map((movie) => (
             <Card
               key={movie.id}
               name={movie.nameRU}
@@ -26,7 +26,7 @@ function MoviesCardList({
             />
           ))}
         </ul>
-        <button type="button" className="movies__button">Ещё</button>
+        {limit < movies.length && <button onClick={onAddFilms} type="button" className="movies__button">Ещё</button>}
       </div>
     </section>
   );

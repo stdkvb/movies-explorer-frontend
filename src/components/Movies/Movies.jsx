@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import moviesApi from '../../utils/MoviesApi';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 function Movies() {
   const [loading, setLoading] = useState(true);
@@ -11,13 +11,20 @@ function Movies() {
   const [foundMovie, setFoundMovie] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [errorText, setErrorText] = useState('Что-то пошло не так');
-  const isLimit = useLocation().pathname === '/movies' ? 7 : 3;
+  const [limit, setLimit] = useState(0);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
-    setNoSearch(true);
-    setMovies([]);
-    setLoading(true);
-  }, []);
+    if (width <= 1280 && width > 800) {
+      setLimit(7);
+    } else if (width <= 800 && width > 400) {
+      setLimit(3);
+    } else if (width <= 400) {
+      setLimit(5);
+    }
+  }, [width]);
+
+  const addMovies = () => setLimit(limit * 2);
 
   const handleSearchSubmit = (query) => {
     setNoSearch(false);
@@ -32,38 +39,43 @@ function Movies() {
       setErrorText('Ничего не найдено');
       return;
     }
+    localStorage.setItem('savedMovies', JSON.stringify(sortedMovie));
     setNotFound(false);
     setFoundMovie(sortedMovie);
     console.log(foundMovie);
   };
 
-  const renderFilms = (value) => {
+  useEffect(() => {
     setLoading(true);
     moviesApi.getMovies()
       .then((response) => {
         setMovies(response);
-        handleSearchSubmit(value);
-        console.log(response);
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorText('Проблема с соединением');
-        console.log(error);
       })
       .finally(() => setLoading(false));
-  };
+  }, []);
+
+  useEffect(() => {
+    setNoSearch(false);
+    console.log(JSON.parse(localStorage.getItem('savedMovies')));
+    setFoundMovie(JSON.parse(localStorage.getItem('savedMovies')));
+  }, []);
 
   return (
     <>
       <SearchForm
-        onSearchSubmit={renderFilms}
+        onSearchSubmit={handleSearchSubmit}
       />
       {!noSearch && (
         <MoviesCardList
           movies={foundMovie}
           loading={loading}
-          isLimit={isLimit}
           notFound={notFound}
           errorText={errorText}
+          limit={limit}
+          onAddFilms={addMovies}
         />
       )}
     </>
