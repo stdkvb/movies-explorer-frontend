@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import loupe from '../../images/loupe.svg';
 import find from '../../images/find.svg';
 
 function SearchForm({ onSearchSubmit, onHandleCheck, shortChecked }) {
+  const [searchValue, setSearchValue] = useState('');
   const {
     register,
     formState: {
@@ -16,7 +17,13 @@ function SearchForm({ onSearchSubmit, onHandleCheck, shortChecked }) {
 
   const handleSearchSubmit = (data) => {
     onSearchSubmit(data.search);
+    setSearchValue(data.search);
+    localStorage.setItem('searchValue', data.search);
   };
+
+  useEffect(() => {
+    setSearchValue(localStorage.getItem('searchValue'));
+  }, []);
 
   return (
     <section className='search'>
@@ -25,6 +32,7 @@ function SearchForm({ onSearchSubmit, onHandleCheck, shortChecked }) {
         <input
           className='search__input'
           placeholder='Фильм'
+          defaultValue={searchValue}
           {...register('search', {
             required: 'Нужно ввести ключевое слово',
             maxLength: {
