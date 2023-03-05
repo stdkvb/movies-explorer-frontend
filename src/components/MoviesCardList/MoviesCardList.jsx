@@ -1,10 +1,16 @@
 import React from 'react';
 import Card from '../Card/Card';
 import Preloader from '../Preloader/Preloader';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
-function MoviesCardList({ movies, loading, isLimit }) {
+function MoviesCardList({
+  movies, loading, isLimit, notFound, errorText,
+}) {
   if (loading) {
     return <Preloader />;
+  }
+  if (notFound) {
+    return <InfoTooltip errorText={errorText} />;
   }
 
   return (

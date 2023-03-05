@@ -11,6 +11,7 @@
 @import './components/Student/Student.css';
 @import './components/Portfolio/Portfolio.css';
 @import './components/SearchForm/SearchForm.css';
+@import './components/InfoTooltip/InfoTooltip.css';
 @import './components/Footer/Footer.css';
 @import './components/MoviesCardList/MoviesCardList.css';
 @import './components/Card/Card.css';

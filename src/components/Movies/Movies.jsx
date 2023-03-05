@@ -9,6 +9,8 @@ function Movies() {
   const [noSearch, setNoSearch] = useState(true);
   const [movies, setMovies] = useState([]);
   const [foundMovie, setFoundMovie] = useState([]);
+  const [notFound, setNotFound] = useState(false);
+  const [errorText, setErrorText] = useState('Что-то пошло не так');
   const isLimit = useLocation().pathname === '/movies' ? 7 : 3;
 
   useEffect(() => {
@@ -18,13 +20,19 @@ function Movies() {
   }, []);
 
   const handleSearchSubmit = (query) => {
+    setNoSearch(false);
     const sortedMovie = movies.filter((item) => {
       const value = query.toLowerCase().trim();
       const movieRu = item.nameRU.toLowerCase().trim();
       const movieEn = item.nameEN.toLowerCase().trim();
-      return movieRu.includes(value) || movieEn.includes(value) ? item : '';
+      return (movieRu.includes(value) || movieEn.includes(value)) && item;
     });
-    setNoSearch(false);
+    if (sortedMovie.length === 0) {
+      setNotFound(true);
+      setErrorText('Ничего не найдено');
+      return;
+    }
+    setNotFound(false);
     setFoundMovie(sortedMovie);
     console.log(foundMovie);
   };
@@ -38,6 +46,7 @@ function Movies() {
         console.log(response);
       })
       .catch((error) => {
+        setErrorText('Проблема с соединением');
         console.log(error);
       })
       .finally(() => setLoading(false));
@@ -53,6 +62,8 @@ function Movies() {
           movies={foundMovie}
           loading={loading}
           isLimit={isLimit}
+          notFound={notFound}
+          errorText={errorText}
         />
       )}
     </>

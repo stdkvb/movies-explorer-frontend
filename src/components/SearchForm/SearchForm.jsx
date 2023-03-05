@@ -21,7 +21,6 @@ function SearchForm({ onSearchSubmit }) {
         <input className='search__input' name="search" placeholder='Фильм' required onChange={handleChangeSearch} />
         <button className='search__button' type='submit'><img src={find} alt='' /></button>
       </form>
-      <span className="search__error">Нужно ввести ключевое слово</span>
       <label className='search__filter' htmlFor='filter'>
         <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' />
         Короткометражки
