@@ -25,7 +25,6 @@ function App() {
         setLoggedIn(true);
         console.log(data);
         setCurrentUser(data);
-        navigate('/movies');
       })
       .catch((error) => {
         if (error === 400) {
@@ -36,7 +35,7 @@ function App() {
           console.log(`${error.status} – ${error.statusText}`);
         }
       });
-  }, []);
+  }, [navigate]);
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
@@ -45,7 +44,7 @@ function App() {
           <Route element={<PrivateRoutes loggedIn={loggedIn} />}>
             <Route path="/movies" element={<Movies />} />
             <Route path="/saved-movies" element={<SavedMovies />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile onCurrentUser={setCurrentUser} onLoggedIn={setLoggedIn} />} />
           </Route>
         </Route>
         <Route path="/sign-in" element={<Login onLoggedIn={setLoggedIn} />} />

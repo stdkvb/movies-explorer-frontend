@@ -51,6 +51,10 @@
   border-radius: 8px;
 }
 
+.form-body__input:disabled {
+  background: none;
+}
+
 .form-body__input:focus-visible {
   outline: none;
 }

@@ -33,11 +33,11 @@ function Login({ onLoggedIn }) {
       })
       .catch((error) => {
         console.log(error.status);
-        if (error.status === 401) {
+        if (error.status === 401 || 404) {
           setSubmitError('Вы ввели неправильный логин или пароль.');
-          return;
+        } else {
+          setSubmitError('На сервере произошла ошибка.');
         }
-        setSubmitError('На сервере произошла ошибка.');
       });
   };
 
