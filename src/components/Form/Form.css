@@ -92,6 +92,8 @@
 
 .form-body__button_disabled {
   background-color: #a0a0a0;
+  color: #c2c2c2;
+  cursor: inherit;
 }
 
 .form-body__button:hover {
