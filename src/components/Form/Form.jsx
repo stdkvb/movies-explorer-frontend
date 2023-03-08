@@ -13,6 +13,7 @@ function Form(
     isValid,
     onHandleSubmit,
     onSubmit,
+    submitError,
   },
 ) {
   return (
@@ -23,6 +24,7 @@ function Form(
           <h1 className="form__title">{ title }</h1>
           <form className="form-body register__form" onSubmit={onHandleSubmit(onSubmit)}>
             {children}
+            <span className={`form-body__error form-body__error_submit ${submitError && 'form-body__error_submit_is-active'}`}>{submitError}</span>
             <button type="submit" className={`form-body__button ${!isValid ? 'form-body__button_disabled' : ''}`} disabled={!isValid}>{buttonText}</button>
             <p className="form__text">
               {formText}

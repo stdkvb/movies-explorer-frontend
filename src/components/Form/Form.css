@@ -22,6 +22,7 @@
   font-weight: 500;
   font-style: normal;
   flex: 1;
+  position: relative;
 }
 
 .form-body__label {
@@ -124,6 +125,18 @@
 
 .form__link {
   margin: 0 0 0 6px;
+}
+
+.form-body__error_submit {
+  position: initial;
+  color: #ee3465;
+  text-align: center;
+  width: 100%;
+  visibility: hidden;
+}
+
+.form-body__error_submit_is-active {
+  visibility: inherit;
 }
 
 @media screen and (max-width: 1280px) {

@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from '../Form/Form';
 import api from '../../utils/MainApi';
 
 function Register() {
+  const [submitError, setSubmitError] = useState('');
+
   const {
     register,
     formState: {
@@ -12,6 +14,7 @@ function Register() {
     },
     handleSubmit,
     setFocus,
+    reset,
   } = useForm({
     mode: 'onChange',
   });
@@ -22,8 +25,13 @@ function Register() {
 
   const handleRegisterSubmit = ({ name, email, password }) => {
     api.createUser(name, email, password)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      .then(() => {
+        setSubmitError('');
+        reset();
+      })
+      .catch((error) => {
+        error.json().then((text) => setSubmitError(text.message));
+      });
   };
 
   return (
@@ -36,6 +44,7 @@ function Register() {
       isValid={isValid}
       onHandleSubmit={handleSubmit}
       onSubmit={handleRegisterSubmit}
+      submitError={submitError}
     >
       <label htmlFor="name" className="form-body__label">
         Имя

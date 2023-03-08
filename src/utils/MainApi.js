@@ -7,7 +7,9 @@ class Api {
   }
 
   static errorHandle(response) {
-    return response.ok ? response.json() : Promise.reject(new Error(`Ошибка № ${response.status} – ${response.ok}`));
+    return response.ok
+      ? response.json()
+      : Promise.reject(response);
   }
 
   createUser(name, email, password) {
@@ -24,6 +26,7 @@ class Api {
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({ email, password }),
     })
       .then(Api.errorHandle);
