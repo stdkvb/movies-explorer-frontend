@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Form from '../Form/Form';
 import api from '../../utils/MainApi';
 
-function Register() {
+function Register({ onLoggedIn }) {
   const [submitError, setSubmitError] = useState('');
+  const navigate = useNavigate();
 
   const {
     register,
@@ -28,9 +30,23 @@ function Register() {
       .then(() => {
         setSubmitError('');
         reset();
+        api.loginUser(email, password)
+          .then(() => {
+            onLoggedIn(true);
+            setSubmitError('');
+            navigate('/movies');
+          })
+          .catch((error) => {
+            error.json().then((text) => setSubmitError(text.message));
+          });
       })
       .catch((error) => {
-        error.json().then((text) => setSubmitError(text.message));
+        console.log(error.status);
+        if (error.status === 409) {
+          setSubmitError('Пользователь с таким email уже существует.');
+          return;
+        }
+        setSubmitError('На сервере произошла ошибка.');
       });
   };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import PrivateRoutes from '../../utils/PrivateRoute';
 import api from '../../utils/MainApi';
 import Page from '../Page/Page';
@@ -13,15 +14,17 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
 
   console.log(loggedIn);
   useEffect(() => {
     console.log('test');
     api.getUserInfo()
-      .then((response) => {
+      .then((data) => {
         setLoggedIn(true);
-        console.log(response);
+        console.log(data);
+        setCurrentUser(data);
         navigate('/movies');
       })
       .catch((error) => {
@@ -35,19 +38,21 @@ function App() {
       });
   }, []);
   return (
-    <Routes>
-      <Route path="/" element={<Page />}>
-        <Route index element={<Main />} />
-        <Route element={<PrivateRoutes loggedIn={loggedIn} />}>
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/saved-movies" element={<SavedMovies />} />
-          <Route path="/profile" element={<Profile />} />
+    <CurrentUserContext.Provider value={currentUser}>
+      <Routes>
+        <Route path="/" element={<Page />}>
+          <Route index element={<Main />} />
+          <Route element={<PrivateRoutes loggedIn={loggedIn} />}>
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/saved-movies" element={<SavedMovies />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Route>
-      </Route>
-      <Route path="/sign-in" element={<Login onLoggedIn={setLoggedIn} />} />
-      <Route path="/sign-up" element={<Register />} />
-      <Route path="*" element={<ErrorPage />} />
-    </Routes>
+        <Route path="/sign-in" element={<Login onLoggedIn={setLoggedIn} />} />
+        <Route path="/sign-up" element={<Register onLoggedIn={setLoggedIn} />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </CurrentUserContext.Provider>
   );
 }
 
