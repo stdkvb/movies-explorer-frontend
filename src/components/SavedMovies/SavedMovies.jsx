@@ -5,7 +5,9 @@ function SavedMovies() {
   return (
     <>
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList
+        movies={[]}
+      />
     </>
   );
 }

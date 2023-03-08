@@ -11,6 +11,7 @@ function MoviesCardList({
   errorText,
   limit,
   onAddFilms,
+  onSave,
 }) {
   if (loading) {
     return <Preloader />;
@@ -29,6 +30,8 @@ function MoviesCardList({
               duration={movie.duration}
               images={`https://api.nomoreparties.co${movie.image.url}`}
               trailerLink={movie.trailerLink}
+              movie={movie}
+              onSave={onSave}
             />
           ))}
         </ul>

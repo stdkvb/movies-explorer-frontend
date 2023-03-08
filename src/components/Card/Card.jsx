@@ -23,11 +23,14 @@ function Card({
   duration,
   images,
   trailerLink,
+  movie,
+  onSave,
 }) {
   const [saved, setSaved] = useState(false);
 
   const handleSaved = () => {
     setSaved(!saved);
+    onSave(movie);
   };
 
   const convertDuration = (value) => {
@@ -49,8 +52,17 @@ function Card({
           <p className="movies-list__duration">{convertDuration(duration)}</p>
         </div>
         <div>
-          {useLocation().pathname === '/movies'
-            && <button onClick={handleSaved} type="button" className={`movies-list__save ${saved && 'movies-list__save_active'}`} aria-label="save-film" />}
+          {
+          useLocation().pathname === '/movies'
+          && (
+          <button
+            onClick={handleSaved}
+            type="button"
+            className={`movies-list__save ${saved && 'movies-list__save_active'}`}
+            aria-label="save-film"
+          />
+          )
+        }
           {useLocation().pathname === '/saved-movies'
             && <button type="button" className="movies-list__delete" aria-label="save-film" />}
         </div>

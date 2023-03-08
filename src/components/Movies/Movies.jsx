@@ -102,6 +102,10 @@ function Movies() {
 
   const addMovies = () => setLimit(limit * 2);
 
+  const handleSaveMovie = (dataMovie) => {
+    console.log(dataMovie);
+  };
+
   return (
     <>
       <SearchForm
@@ -117,6 +121,7 @@ function Movies() {
           errorText={errorText}
           limit={limit}
           onAddFilms={addMovies}
+          onSave={handleSaveMovie}
         />
       )}
     </>
