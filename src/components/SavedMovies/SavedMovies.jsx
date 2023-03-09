@@ -1,12 +1,13 @@
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
+function SavedMovies({ savedMovies, onDelete }) {
   return (
     <>
       <SearchForm />
       <MoviesCardList
-        movies={[]}
+        movies={savedMovies}
+        onDelete={onDelete}
       />
     </>
   );

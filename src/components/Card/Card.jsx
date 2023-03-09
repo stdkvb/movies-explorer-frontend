@@ -1,21 +1,4 @@
-// import { useLocation } from 'react-router-dom';
-
-// function Card({ name, duration, images }) {
-//   return (
-//     <div className='card'>
-//       <img className='card__image' src={images} alt='обложка фильма' />
-//       <div className='card__text'>
-//         <p className='card__title'>{name}</p>
-
-//       </div>
-//       <p className='card__duration'>{duration}</p>
-//     </div>
-//   );
-// }
-
-// export default Card;
-
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 function Card({
@@ -25,12 +8,15 @@ function Card({
   trailerLink,
   movie,
   onSave,
+  onDelete,
+  savedMovies,
 }) {
-  const [saved, setSaved] = useState(false);
-
   const handleSaved = () => {
-    setSaved(!saved);
     onSave(movie);
+  };
+
+  const handleDelete = () => {
+    onDelete(movie);
   };
 
   const convertDuration = (value) => {
@@ -38,6 +24,8 @@ function Card({
     const minutes = duration % 60;
     return hours !== 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
   };
+
+  const checkedLike = (movies) => movies.some((item) => item.movieId === movie.id);
 
   return (
     <li className="movies-list__item">
@@ -58,13 +46,20 @@ function Card({
           <button
             onClick={handleSaved}
             type="button"
-            className={`movies-list__save ${saved && 'movies-list__save_active'}`}
+            className={`movies-list__save ${checkedLike(savedMovies) ? 'movies-list__save_active' : ''}`}
             aria-label="save-film"
           />
           )
         }
           {useLocation().pathname === '/saved-movies'
-            && <button type="button" className="movies-list__delete" aria-label="save-film" />}
+            && (
+              <button
+                onClick={handleDelete}
+                type="button"
+                className="movies-list__delete"
+                aria-label="save-film"
+              />
+            )}
         </div>
       </div>
     </li>
