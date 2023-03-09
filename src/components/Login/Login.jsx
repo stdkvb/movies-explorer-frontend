@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import Form from '../Form/Form';
-import api from '../../utils/MainApi';
 
-function Login({ onLoggedIn }) {
-  const [submitError, setSubmitError] = useState('');
+function Login({ onLoginSubmit, submitError }) {
   const {
     register,
     formState: {
@@ -18,28 +15,9 @@ function Login({ onLoggedIn }) {
     mode: 'onChange',
   });
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     setFocus('email');
   }, [setFocus]);
-
-  const handleLoginSubmit = ({ email, password }) => {
-    api.loginUser(email, password)
-      .then(() => {
-        onLoggedIn(true);
-        setSubmitError('');
-        navigate('/movies');
-      })
-      .catch((error) => {
-        console.log(error.status);
-        if (error.status === 401 || 404) {
-          setSubmitError('Вы ввели неправильный логин или пароль.');
-        } else {
-          setSubmitError('На сервере произошла ошибка.');
-        }
-      });
-  };
 
   return (
     <Form
@@ -50,7 +28,7 @@ function Login({ onLoggedIn }) {
       linkText="Регистрация"
       isValid={isValid}
       onHandleSubmit={handleSubmit}
-      onSubmit={handleLoginSubmit}
+      onSubmit={onLoginSubmit}
       submitError={submitError}
     >
       <label htmlFor="email" className="form-body__label">

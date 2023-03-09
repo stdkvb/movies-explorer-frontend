@@ -16,6 +16,8 @@ function Movies(
     onAddFilms,
     onSave,
     savedMovies,
+    onSearchValue,
+    searchValue,
   },
 ) {
   return (
@@ -35,6 +37,8 @@ function Movies(
           onAddFilms={onAddFilms}
           onSave={onSave}
           savedMovies={savedMovies}
+          onSearchValue={onSearchValue}
+          searchValue={searchValue}
         />
       )}
     </>

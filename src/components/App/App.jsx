@@ -16,12 +16,16 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [currentUser, setCurrentUser] = useState({});
   const [loading, setLoading] = useState(false);
   const [noSearch, setNoSearch] = useState(true);
+  const [searchValue, setSearchValue] = useState('');
   const [allMovies, setAllMovies] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [foundSavedMovies, setFoundSavedMovies] = useState([]);
+  const [searchSavedResult, setSearchSavedResult] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [errorText, setErrorText] = useState('Что-то пошло не так');
   const [limit, setLimit] = useState(0);
@@ -29,13 +33,17 @@ function App() {
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
 
-  console.log(loggedIn);
   useEffect(() => {
+    setSearchValue(localStorage.getItem('searchValue'));
+  }, []);
+
+  const getAccess = () => {
     api.getUserInfo()
       .then((data) => {
         setLoggedIn(true);
         navigate('/');
         setCurrentUser(data);
+        console.log(data);
       })
       .catch((error) => {
         if (error === 400) {
@@ -46,7 +54,39 @@ function App() {
           console.log(`${error.status} – ${error.statusText}`);
         }
       });
-  }, []);
+  };
+
+  useEffect(getAccess, []);
+
+  const handleLoginSubmit = ({ email, password }) => {
+    api.loginUser(email, password)
+      .then(() => {
+        setLoggedIn(true);
+        setSubmitError('');
+        navigate('/movies');
+        getAccess();
+      })
+      .catch((error) => {
+        console.log(error.status);
+        if (error.status === 401 || 404) {
+          setSubmitError('Вы ввели неправильный логин или пароль.');
+        } else {
+          setSubmitError('На сервере произошла ошибка.');
+        }
+      });
+  };
+
+  const handleLogout = () => {
+    api.logoutUser();
+    localStorage.clear();
+    setLoggedIn(false);
+    setCurrentUser([]);
+    setSearchResult([]);
+    setSearchValue('');
+    setSavedMovies([]);
+    setFoundSavedMovies([]);
+    setSearchSavedResult([]);
+  };
 
   const getShortMovies = (movies) => movies.filter((movie) => movie.duration <= 40);
 
@@ -66,6 +106,17 @@ function App() {
   }, [searchResult]);
 
   useEffect(() => {
+    if (searchResult.length === 0) {
+      setNotFound(true);
+      setErrorText('Ничего не найдено');
+    }
+  }, [searchResult]);
+
+  useEffect(() => {
+    setNotFound(false);
+  }, [navigate]);
+
+  useEffect(() => {
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
     if (savedMovies) {
       setNotFound(false);
@@ -78,9 +129,20 @@ function App() {
     }
   }, [shortChecked]);
 
+  const handleSavedShortFilter = () => {
+    if (!shortChecked) {
+      setSearchSavedResult(getShortMovies(searchSavedResult));
+    } else if (foundSavedMovies.length === 0) {
+      setSearchSavedResult(savedMovies);
+    } else {
+      setSearchSavedResult(foundSavedMovies);
+    }
+  };
+
   const handleShortFilter = () => {
     setShortChecked(!shortChecked);
     localStorage.setItem('savedChecked', !shortChecked);
+    handleSavedShortFilter();
   };
 
   const checkShortFilter = (movies) => {
@@ -154,14 +216,18 @@ function App() {
   };
 
   useEffect(() => {
-    setLoading(true);
-    api.getMovies()
-      .then((response) => {
-        setSavedMovies(response);
-      })
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  }, []);
+    if (loggedIn) {
+      setLoading(true);
+      api.getMovies()
+        .then((response) => {
+          const userSavedMovies = response.filter((item) => item.owner === currentUser._id);
+          setSavedMovies(userSavedMovies);
+          setSearchSavedResult(userSavedMovies);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+    }
+  }, [currentUser]);
 
   const addMovies = () => setLimit(limit * 2);
 
@@ -197,6 +263,8 @@ function App() {
                   onAddFilms={addMovies}
                   onSave={handleSaveMovie}
                   savedMovies={savedMovies}
+                  onSearchValue={setSearchValue}
+                  searchValue={searchValue}
                 />
             )}
             />
@@ -210,13 +278,14 @@ function App() {
                   onHandleCheck={handleShortFilter}
                   shortChecked={shortChecked}
                   notFound={notFound}
+                  onSearchValue={setSearchValue}
                 />
               )}
             />
-            <Route path="/profile" element={<Profile onCurrentUser={setCurrentUser} onLoggedIn={setLoggedIn} />} />
+            <Route path="/profile" element={<Profile onCurrentUser={setCurrentUser} onLoggedIn={setLoggedIn} onLogout={handleLogout} />} />
           </Route>
         </Route>
-        <Route path="/sign-in" element={<Login onLoggedIn={setLoggedIn} />} />
+        <Route path="/sign-in" element={<Login onLoginSubmit={handleLoginSubmit} submitError={submitError} />} />
         <Route path="/sign-up" element={<Register onLoggedIn={setLoggedIn} />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
