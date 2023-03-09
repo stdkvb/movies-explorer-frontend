@@ -124,6 +124,12 @@ function App() {
     }
   };
 
+  const handleSavedSearchSubmit = (query) => {
+    const foundSavedMovies = getFoundMovies(savedMovies, query);
+    const checkedSavedMovies = checkShortFilter(foundSavedMovies);
+    setSavedMovies(checkedSavedMovies);
+  };
+
   const handleDeleteMovie = (dataMovie) => {
     api.deleteMovie(dataMovie._id)
       .then(() => {
@@ -133,7 +139,6 @@ function App() {
   };
 
   const handleSaveMovie = (dataMovie) => {
-    console.log(dataMovie);
     const isSaved = savedMovies.some((item) => item.movieId === dataMovie.id);
     if (isSaved) {
       const savedMovie = savedMovies.find((item) => item.movieId === dataMovie.id);
@@ -152,7 +157,6 @@ function App() {
     setLoading(true);
     api.getMovies()
       .then((response) => {
-        console.log(response);
         setSavedMovies(response);
       })
       .catch((error) => console.log(error))
@@ -202,6 +206,10 @@ function App() {
                 <SavedMovies
                   savedMovies={savedMovies}
                   onDelete={handleDeleteMovie}
+                  onSearchSubmit={handleSavedSearchSubmit}
+                  onHandleCheck={handleShortFilter}
+                  shortChecked={shortChecked}
+                  notFound={notFound}
                 />
               )}
             />

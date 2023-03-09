@@ -1,13 +1,20 @@
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies({ savedMovies, onDelete }) {
+function SavedMovies({
+  savedMovies, onDelete, onSearchSubmit, shortChecked, onHandleCheck, notFound,
+}) {
   return (
     <>
-      <SearchForm />
+      <SearchForm
+        onSearchSubmit={onSearchSubmit}
+        shortChecked={shortChecked}
+        onHandleCheck={onHandleCheck}
+      />
       <MoviesCardList
         movies={savedMovies}
         onDelete={onDelete}
+        notFound={notFound}
       />
     </>
   );
