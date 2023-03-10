@@ -6,20 +6,16 @@ function SavedMovies(
     savedMovies,
     onDelete,
     onSearchSubmit,
-    shortChecked,
-    onHandleCheck,
+    onHandleSavedMovieCheck,
     notFound,
     errorText,
-    onSearchValue,
   },
 ) {
   return (
     <>
       <SearchForm
         onSearchSubmit={onSearchSubmit}
-        shortChecked={shortChecked}
-        onSearchValue={onSearchValue}
-        onHandleCheck={onHandleCheck}
+        onHandleSavedMovieCheck={onHandleSavedMovieCheck}
       />
       <MoviesCardList
         movies={savedMovies}

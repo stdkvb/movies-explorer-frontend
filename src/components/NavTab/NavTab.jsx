@@ -19,7 +19,7 @@ function NavTab() {
       <nav className={`menu header__menu-navigation ${isOpenMenu && 'header__menu-navigation_is-active'}`}>
         <ul className="menu__list header__list-navigation">
           <li className="menu__item header__item-navigation header__item-navigation_inactive">
-            <NavLink to="/" className={setActive}>
+            <NavLink to="/" className={setActive} onClick={handleBurgerClick}>
               Главная
             </NavLink>
           </li>
@@ -35,7 +35,7 @@ function NavTab() {
           </li>
         </ul>
       </nav>
-      <Link to="/profile" className={`header__profile ${isOpenMenu && 'header__profile_is-active'}`}>
+      <Link to="/profile" className={`profile header__profile ${isOpenMenu && 'header__profile_is-active'}`} onClick={handleBurgerClick}>
         <p className="header__profile-name">Аккаунт</p>
       </Link>
       <div role="presentation" onClick={handleBurgerClick} className={`header__burger burger ${isOpenMenu && 'burger_is-active'}`}>

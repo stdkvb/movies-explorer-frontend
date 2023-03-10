@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import Form from '../Form/Form';
-import api from '../../utils/MainApi';
 
-function Register({ onLoggedIn }) {
-  const [submitError, setSubmitError] = useState('');
-  const navigate = useNavigate();
-
+function Register({ onRegisterSubmit, submitError }) {
   const {
     register,
     formState: {
@@ -16,7 +11,6 @@ function Register({ onLoggedIn }) {
     },
     handleSubmit,
     setFocus,
-    reset,
   } = useForm({
     mode: 'onChange',
   });
@@ -24,31 +18,6 @@ function Register({ onLoggedIn }) {
   useEffect(() => {
     setFocus('name');
   }, [setFocus]);
-
-  const handleRegisterSubmit = ({ name, email, password }) => {
-    api.createUser(name, email, password)
-      .then(() => {
-        setSubmitError('');
-        reset();
-        api.loginUser(email, password)
-          .then(() => {
-            onLoggedIn(true);
-            setSubmitError('');
-            navigate('/movies');
-          })
-          .catch((error) => {
-            error.json().then((text) => setSubmitError(text.message));
-          });
-      })
-      .catch((error) => {
-        console.log(error.status);
-        if (error.status === 409) {
-          setSubmitError('Пользователь с таким email уже существует.');
-          return;
-        }
-        setSubmitError('На сервере произошла ошибка.');
-      });
-  };
 
   return (
     <Form
@@ -59,7 +28,7 @@ function Register({ onLoggedIn }) {
       linkText="Войти"
       isValid={isValid}
       onHandleSubmit={handleSubmit}
-      onSubmit={handleRegisterSubmit}
+      onSubmit={onRegisterSubmit}
       submitError={submitError}
     >
       <label htmlFor="name" className="form-body__label">

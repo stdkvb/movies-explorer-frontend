@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  Routes, Route, useNavigate, useLocation,
+} from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import PrivateRoutes from '../../utils/PrivateRoute';
 import api from '../../utils/MainApi';
@@ -30,20 +32,17 @@ function App() {
   const [errorText, setErrorText] = useState('Что-то пошло не так');
   const [limit, setLimit] = useState(0);
   const [shortChecked, setShortChecked] = useState(false);
+  const [savedMovieCheck, setSavedMovieCheck] = useState(false);
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    setSearchValue(localStorage.getItem('searchValue'));
-  }, []);
+  const pathName = useLocation().pathname;
 
   const getAccess = () => {
     api.getUserInfo()
       .then((data) => {
         setLoggedIn(true);
-        navigate('/');
+        navigate('/movies');
         setCurrentUser(data);
-        console.log(data);
       })
       .catch((error) => {
         if (error === 400) {
@@ -62,9 +61,9 @@ function App() {
     api.loginUser(email, password)
       .then(() => {
         setLoggedIn(true);
+        getAccess();
         setSubmitError('');
         navigate('/movies');
-        getAccess();
       })
       .catch((error) => {
         console.log(error.status);
@@ -77,72 +76,42 @@ function App() {
   };
 
   const handleLogout = () => {
-    api.logoutUser();
+    api.logoutUser()
+      .then()
+      .catch((error) => console.log(error));
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser([]);
     setSearchResult([]);
+    setAllMovies([]);
     setSearchValue('');
+    setShortChecked(false);
     setSavedMovies([]);
     setFoundSavedMovies([]);
     setSearchSavedResult([]);
   };
 
-  const getShortMovies = (movies) => movies.filter((movie) => movie.duration <= 40);
-
-  useEffect(() => {
-    if (localStorage.getItem('savedChecked') === 'true') {
-      setShortChecked(true);
-    } else {
-      setShortChecked(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (searchResult.length === 0) {
-      setNotFound(true);
-      setErrorText('Ничего не найдено');
-    }
-  }, [searchResult]);
-
-  useEffect(() => {
-    if (searchResult.length === 0) {
-      setNotFound(true);
-      setErrorText('Ничего не найдено');
-    }
-  }, [searchResult]);
-
-  useEffect(() => {
-    setNotFound(false);
-  }, [navigate]);
-
-  useEffect(() => {
-    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-    if (savedMovies) {
-      setNotFound(false);
-      setNoSearch(false);
-      if (shortChecked) {
-        setSearchResult(getShortMovies(savedMovies));
-      } else {
-        setSearchResult(savedMovies);
-      }
-    }
-  }, [shortChecked]);
-
-  const handleSavedShortFilter = () => {
-    if (!shortChecked) {
-      setSearchSavedResult(getShortMovies(searchSavedResult));
-    } else if (foundSavedMovies.length === 0) {
-      setSearchSavedResult(savedMovies);
-    } else {
-      setSearchSavedResult(foundSavedMovies);
-    }
+  const handleRegisterSubmit = ({ name, email, password }) => {
+    api.createUser(name, email, password)
+      .then(() => {
+        setSubmitError('');
+        handleLoginSubmit({ email, password });
+      })
+      .catch((error) => {
+        console.log(error.status);
+        if (error.status === 409) {
+          setSubmitError('Пользователь с таким email уже существует.');
+          return;
+        }
+        setSubmitError('На сервере произошла ошибка.');
+      });
   };
+
+  const getShortMovies = (movies) => movies.filter((movie) => movie.duration <= 40);
 
   const handleShortFilter = () => {
     setShortChecked(!shortChecked);
     localStorage.setItem('savedChecked', !shortChecked);
-    handleSavedShortFilter();
   };
 
   const checkShortFilter = (movies) => {
@@ -161,14 +130,15 @@ function App() {
 
   const handleSortedMovies = (movies, query) => {
     const foundMovies = getFoundMovies(movies, query);
-    localStorage.setItem('savedMovies', JSON.stringify(foundMovies));
     const checkedMovies = checkShortFilter(foundMovies);
+    localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+    localStorage.setItem('savedChecked', shortChecked);
     setSearchResult(checkedMovies);
   };
 
   const handleSearchSubmit = (query) => {
+    localStorage.setItem('searchValue', query);
     setNoSearch(false);
-    setNotFound(false);
     if (allMovies.length === 0) {
       setLoading(true);
       moviesApi.getMovies()
@@ -186,16 +156,63 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    if (pathName === '/movies') {
+      if (searchResult.length === 0) {
+        setNotFound(true);
+        setErrorText('Ничего не найдено');
+      } else {
+        setNotFound(false);
+      }
+    }
+  }, [searchResult, navigate]);
+
+  useEffect(() => {
+    if (pathName === '/movies') {
+      const searchLocalResult = JSON.parse(localStorage.getItem('searchResult'));
+      setSearchResult(searchLocalResult);
+      setSearchValue(localStorage.getItem('searchValue'));
+      if (localStorage.getItem('savedChecked') === 'true') {
+        setShortChecked(true);
+      } else {
+        setShortChecked(false);
+      }
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const foundLocalMovies = JSON.parse(localStorage.getItem('foundMovies'));
+    if (foundLocalMovies) {
+      setNotFound(false);
+      setNoSearch(false);
+      if (shortChecked) {
+        setSearchResult(getShortMovies(foundLocalMovies));
+      } else {
+        setSearchResult(foundLocalMovies);
+      }
+    }
+  }, [shortChecked]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      localStorage.setItem('searchResult', JSON.stringify(searchResult));
+    }
+  }, [searchResult]);
+
   const handleSavedSearchSubmit = (query) => {
+    setNotFound(false);
     const foundSavedMovies = getFoundMovies(savedMovies, query);
     const checkedSavedMovies = checkShortFilter(foundSavedMovies);
-    setSavedMovies(checkedSavedMovies);
+    setFoundSavedMovies(foundSavedMovies);
+    setSearchSavedResult(checkedSavedMovies);
   };
 
   const handleDeleteMovie = (dataMovie) => {
     api.deleteMovie(dataMovie._id)
       .then(() => {
         setSavedMovies(savedMovies.filter((item) => item.movieId !== dataMovie.movieId));
+        setSearchSavedResult(searchSavedResult
+          .filter((item) => item.movieId !== dataMovie.movieId));
       })
       .catch((error) => console.log(error));
   };
@@ -211,13 +228,20 @@ function App() {
     api.createMovie(dataMovie)
       .then((response) => {
         setSavedMovies([...savedMovies, response]);
+        setSearchSavedResult([...searchSavedResult, response]);
       })
       .catch((error) => console.log(error));
   };
 
+  const handleSavedMovieCheck = () => {
+    setSavedMovieCheck(!savedMovieCheck);
+  };
+
   useEffect(() => {
-    if (loggedIn) {
+    if (pathName === '/saved-movies') {
       setLoading(true);
+      setNotFound(false);
+      setSavedMovieCheck(false);
       api.getMovies()
         .then((response) => {
           const userSavedMovies = response.filter((item) => item.owner === currentUser._id);
@@ -227,7 +251,28 @@ function App() {
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
     }
-  }, [currentUser]);
+  }, [navigate]);
+
+  useEffect(() => {
+    if (pathName === '/saved-movies') {
+      if (searchSavedResult.length === 0) {
+        setNotFound(true);
+        setErrorText('Ничего не найдено');
+      } else {
+        setNotFound(false);
+      }
+    }
+  }, [searchSavedResult]);
+
+  useEffect(() => {
+    if (savedMovieCheck) {
+      setSearchSavedResult(getShortMovies(searchSavedResult));
+    } else if (foundSavedMovies.length === 0) {
+      setSearchSavedResult(savedMovies);
+    } else {
+      setSearchSavedResult(foundSavedMovies);
+    }
+  }, [savedMovieCheck]);
 
   const addMovies = () => setLimit(limit * 2);
 
@@ -266,27 +311,26 @@ function App() {
                   onSearchValue={setSearchValue}
                   searchValue={searchValue}
                 />
-            )}
+              )}
             />
             <Route
               path="/saved-movies"
               element={(
                 <SavedMovies
-                  savedMovies={savedMovies}
-                  onDelete={handleDeleteMovie}
                   onSearchSubmit={handleSavedSearchSubmit}
-                  onHandleCheck={handleShortFilter}
-                  shortChecked={shortChecked}
+                  onHandleSavedMovieCheck={handleSavedMovieCheck}
+                  savedMovies={searchSavedResult}
+                  onDelete={handleDeleteMovie}
                   notFound={notFound}
-                  onSearchValue={setSearchValue}
+                  errorText={errorText}
                 />
-              )}
+                )}
             />
             <Route path="/profile" element={<Profile onCurrentUser={setCurrentUser} onLoggedIn={setLoggedIn} onLogout={handleLogout} />} />
           </Route>
         </Route>
         <Route path="/sign-in" element={<Login onLoginSubmit={handleLoginSubmit} submitError={submitError} />} />
-        <Route path="/sign-up" element={<Register onLoggedIn={setLoggedIn} />} />
+        <Route path="/sign-up" element={<Register onRegisterSubmit={handleRegisterSubmit} submitError={submitError} />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </CurrentUserContext.Provider>

@@ -93,12 +93,15 @@
     grid-template-rows: auto minmax(64px, auto);
     height: auto;
   }
-  .movies__image {
+  .movies__image-container {
     max-width: 520px;
+    grid-row: 1;}
+
+  .movies__image {
     height: 240px;
-    grid-row: 1;
     padding: 0;
   }
+
   .movies-content__content {
     grid-template-rows: auto 14px;
     grid-template-columns: auto 12px;
@@ -114,6 +117,11 @@
     margin: 0;
   }
   .movies-list__save {
+    grid-column: -1 / -2;
+    grid-row: 1;
+  }
+
+  .movies-list__delete {
     grid-column: -1 / -2;
     grid-row: 1;
   }
