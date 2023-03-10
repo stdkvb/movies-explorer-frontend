@@ -23,7 +23,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [noSearch, setNoSearch] = useState(true);
   const [searchValue, setSearchValue] = useState('');
-  const [allMovies, setAllMovies] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
@@ -83,7 +82,6 @@ function App() {
     setLoggedIn(false);
     setCurrentUser([]);
     setSearchResult([]);
-    setAllMovies([]);
     setSearchValue('');
     setShortChecked(false);
     setSavedMovies([]);
@@ -138,12 +136,13 @@ function App() {
 
   const handleSearchSubmit = (query) => {
     localStorage.setItem('searchValue', query);
+    const allMovies = JSON.parse(localStorage.getItem('allMovies'));
     setNoSearch(false);
-    if (allMovies.length === 0) {
+    if (!allMovies) {
       setLoading(true);
       moviesApi.getMovies()
         .then((movies) => {
-          setAllMovies(movies);
+          localStorage.setItem('allMovies', JSON.stringify(movies));
           handleSortedMovies(movies, query);
         })
         .catch((error) => {
@@ -157,7 +156,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (pathName === '/movies') {
+    if (pathName === '/movies' && searchResult) {
       if (searchResult.length === 0) {
         setNotFound(true);
         setErrorText('Ничего не найдено');
