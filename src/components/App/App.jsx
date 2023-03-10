@@ -105,6 +105,20 @@ function App() {
       });
   };
 
+  const addMovies = () => setLimit(limit * 2);
+
+  const getLimit = () => {
+    if (width <= 800 && width > 400) {
+      setLimit(3);
+    } else if (width <= 400) {
+      setLimit(5);
+    } else {
+      setLimit(7);
+    }
+  };
+
+  useEffect(getLimit, [width]);
+
   const getShortMovies = (movies) => movies.filter((movie) => movie.duration <= 40);
 
   const handleShortFilter = () => {
@@ -138,6 +152,7 @@ function App() {
     localStorage.setItem('searchValue', query);
     const allMovies = JSON.parse(localStorage.getItem('allMovies'));
     setNoSearch(false);
+    getLimit();
     if (!allMovies) {
       setLoading(true);
       moviesApi.getMovies()
@@ -200,6 +215,7 @@ function App() {
 
   const handleSavedSearchSubmit = (query) => {
     setNotFound(false);
+    getLimit();
     const foundSavedMovies = getFoundMovies(savedMovies, query);
     const checkedSavedMovies = checkShortFilter(foundSavedMovies);
     setFoundSavedMovies(foundSavedMovies);
@@ -237,19 +253,17 @@ function App() {
   };
 
   useEffect(() => {
-    if (pathName === '/saved-movies') {
-      setLoading(true);
-      setNotFound(false);
-      setSavedMovieCheck(false);
-      api.getMovies()
-        .then((response) => {
-          const userSavedMovies = response.filter((item) => item.owner === currentUser._id);
-          setSavedMovies(userSavedMovies);
-          setSearchSavedResult(userSavedMovies);
-        })
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-    }
+    setLoading(true);
+    setNotFound(false);
+    setSavedMovieCheck(false);
+    api.getMovies()
+      .then((response) => {
+        const userSavedMovies = response.filter((item) => item.owner === currentUser._id);
+        setSavedMovies(userSavedMovies);
+        setSearchSavedResult(userSavedMovies);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   }, [navigate]);
 
   useEffect(() => {
@@ -272,18 +286,6 @@ function App() {
       setSearchSavedResult(foundSavedMovies);
     }
   }, [savedMovieCheck]);
-
-  const addMovies = () => setLimit(limit * 2);
-
-  useEffect(() => {
-    if (width <= 800 && width > 400) {
-      setLimit(3);
-    } else if (width <= 400) {
-      setLimit(5);
-    } else {
-      setLimit(7);
-    }
-  }, [width]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
