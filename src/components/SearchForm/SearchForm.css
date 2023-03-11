@@ -71,7 +71,7 @@
     width: 34px;
     height: 14px;
     border-radius: 20px;
-    background-color: #3DDC84;
+    background-color: #222222;
     appearance: none;
     position: relative;
     cursor: pointer;
@@ -88,6 +88,10 @@
     top: 2px;
     left: 2px;
     transition: left 0.3s;
+  }
+
+  .search__filter-checkbox:checked {
+    background-color:#3DDC84;
   }
 
   .search__filter-checkbox:checked::before {
