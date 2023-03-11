@@ -47,12 +47,7 @@
   line-height: 1.2;
   color: #FFFFFF;
   transition: border-color 0.7s;
-  background: #2F2F2F;
-  border-radius: 8px;
-}
-
-.form-body__input:disabled {
-  background: none;
+  background: transparent;
 }
 
 .form-body__input:focus-visible {

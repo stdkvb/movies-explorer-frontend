@@ -12,7 +12,7 @@
 }
 
 .form-profile__label {
-  color: #000;
+  color: #FFFFFF;
   font-size: 11px;
   line-height: 1.18;
 }
@@ -32,11 +32,11 @@
 }
 
 .form-profile__input_separate {
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid #424242;
 }
 
 .form-profile__input_separate:focus-visible {
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid #424242;
 }
 
 .form-profile__text {
