@@ -83,6 +83,9 @@
   border: none;
   background-image: url('../../images/close.svg');
   transition: opacity 0.6s;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 .movies-list__delete:hover {
   opacity: 0.7;
