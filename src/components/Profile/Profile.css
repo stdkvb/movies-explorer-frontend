@@ -25,6 +25,8 @@
   text-align: right;
   z-index: -1;
   margin: -14px 0 0;
+  background-color: transparent;
+  border-radius: 0;
 }
 
 .form-profile__input:focus-visible {

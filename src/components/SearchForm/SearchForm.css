@@ -30,6 +30,10 @@
     text-align: center;
 }
 
+.search__input:focus{
+  outline: none;
+}
+
 .search__button {
     width: 34px;
     height: 34px;
