@@ -1,5 +1,5 @@
 const MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-const BASE_URL = 'https://api.explorer-movies.nomoredomains.club';
+const BASE_URL = 'localhost:3000';
 
 export {
   MOVIES_URL,

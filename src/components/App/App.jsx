@@ -54,8 +54,7 @@ function App() {
   const getAccess = () => {
     api.getUserInfo()
       .then((data) => {
-        setLoggedIn(false);
-        navigate('/movies');
+        setLoggedIn(true);
         setCurrentUser(data);
       })
       .catch((error) => {
