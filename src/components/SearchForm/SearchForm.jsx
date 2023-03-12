@@ -34,12 +34,12 @@ function SearchForm(
   });
 
   return (
-    <section className='search'>
+    <section className="search">
       <form className="search__bar" onSubmit={handleSubmit(handleSearchSubmit)}>
-        <img className='search__icon' src={loupe} alt='' />
+        <img className="search__icon" src={loupe} alt="" />
         <input
-          className='search__input'
-          placeholder='Фильм'
+          className="search__input"
+          placeholder="Фильм"
           defaultValue={searchValue}
           {...register('search', {
             required: 'Нужно ввести ключевое слово',
@@ -50,10 +50,10 @@ function SearchForm(
           })}
         />
         <span className="search__error">{errors.search && `${errors.search.message || 'Что-то пошло не так...'}`}</span>
-        <button className='search__button' type='submit'><img src={find} alt='' /></button>
+        <button className="search__button" type="submit"><img src={find} alt="Найти" /></button>
       </form>
-      <label className='search__filter' htmlFor='filter'>
-        <input className='search__filter-checkbox' name='filter' id='filter' type='checkbox' onClick={onHandleCheck} onChange={onCheck} checked={shortChecked} />
+      <label className="search__filter" htmlFor="filter">
+        <input className="search__filter-checkbox" name="filter" id="filter" type="checkbox" onClick={onHandleCheck} onChange={onCheck} checked={shortChecked} />
         Короткометражки
       </label>
     </section>

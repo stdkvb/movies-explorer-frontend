@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Card from '../Card/Card';
 import Preloader from '../Preloader/Preloader';
