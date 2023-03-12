@@ -6,7 +6,7 @@ class Api {
     this._headers = configuration.headers;
   }
 
-  static errorHandle(response) {
+  static handleResponse(response) {
     return response.ok
       ? response.json()
       : Promise.reject(response);
@@ -19,7 +19,7 @@ class Api {
       credentials: 'include',
       body: JSON.stringify({ name, email, password }),
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 
   loginUser(email, password) {
@@ -29,7 +29,7 @@ class Api {
       credentials: 'include',
       body: JSON.stringify({ email, password }),
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 
   logoutUser() {
@@ -38,7 +38,7 @@ class Api {
       headers: this._headers,
       credentials: 'include',
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 
   getUserInfo() {
@@ -47,7 +47,7 @@ class Api {
       headers: this._headers,
       credentials: 'include',
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 
   updateUser(name, email) {
@@ -57,7 +57,7 @@ class Api {
       credentials: 'include',
       body: JSON.stringify({ name, email }),
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 
   getMovies() {
@@ -66,7 +66,7 @@ class Api {
       headers: this._headers,
       credentials: 'include',
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 
   createMovie(movie) {
@@ -88,7 +88,7 @@ class Api {
         nameEN: movie.nameEN,
       }),
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 
   deleteMovie(movieId) {
@@ -97,7 +97,7 @@ class Api {
       headers: this._headers,
       credentials: 'include',
     })
-      .then(Api.errorHandle);
+      .then(Api.handleResponse);
   }
 }
 

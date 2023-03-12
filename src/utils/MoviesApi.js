@@ -5,7 +5,7 @@ class MoviesApi {
     this._url = url;
   }
 
-  static errorHandle(response) {
+  static handleResponse(response) {
     return response.ok ? response.json() : Promise.reject(new Error(`Ошибка № ${response.status} – ${response.ok}`));
   }
 
@@ -14,7 +14,7 @@ class MoviesApi {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
-      .then(MoviesApi.errorHandle);
+      .then(MoviesApi.handleResponse);
   }
 }
 
