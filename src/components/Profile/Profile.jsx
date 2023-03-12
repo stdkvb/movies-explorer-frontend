@@ -2,14 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import HeadMain from '../HeadMain/HeadMain';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import mainApi from '../../utils/MainApi';
+import api from '../../utils/MainApi';
 
-function Profile({ onCurrentUser, onLogout }) {
+function Profile({
+  onCurrentUser, onLogout, inactiveForm, onSetInactiveForm,
+}) {
   const { name, email } = useContext(CurrentUserContext);
   const [activeForm, setActiveForm] = useState(false);
   const [newName, setNewName] = useState(name);
   const [newEmail, setNewEmail] = useState(email);
   const [isValid, setIsValid] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const {
     register,
@@ -42,14 +45,19 @@ function Profile({ onCurrentUser, onLogout }) {
   }, [handleChangeName, handleChangeEmail]);
 
   const handleUpdateSubmit = () => {
-    mainApi.updateUser(newName, newEmail)
+    onSetInactiveForm(true);
+    api.updateUser(newName, newEmail)
       .then((response) => {
         onCurrentUser(response);
       })
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => handleActiveForm());
+      .finally(() => {
+        handleActiveForm();
+        setIsSuccess(true);
+        onSetInactiveForm(false);
+      });
   };
 
   return (
@@ -67,7 +75,7 @@ function Profile({ onCurrentUser, onLogout }) {
                 id="name"
                 defaultValue={name || ''}
                 onChange={handleChangeName}
-                disabled={!activeForm}
+                disabled={!activeForm || inactiveForm}
                 {...register('name', {
                   required: 'Нужно ввести имя',
                   maxLength: {
@@ -94,7 +102,7 @@ function Profile({ onCurrentUser, onLogout }) {
                 className="form-body__input form-profile__input"
                 id="email"
                 defaultValue={email || ''}
-                disabled={!activeForm}
+                disabled={!activeForm || inactiveForm}
                 {...register('email', {
                   required: 'Нужно ввести электронную почту',
                   pattern: {
@@ -112,11 +120,12 @@ function Profile({ onCurrentUser, onLogout }) {
                   <span className="form-body__error_submit form-profile__error">
                     {(errors.name && errors.name.message) || (errors.email && errors.email.message)}
                   </span>
-                  <button type="submit" className={`form-body__button ${!isValid ? 'form-body__button_disabled' : ''}`} disabled={!isValid}>Сохранить</button>
+                  <button type="submit" className={`form-body__button ${!isValid || inactiveForm ? 'form-body__button_disabled' : ''}`} disabled={!isValid || inactiveForm}>Сохранить</button>
                 </>
               )
               : (
                 <>
+                  <span className={`form-body__error_submit form-body__notification ${isSuccess ? 'form-body__notification_active' : ''}`}>Профиль успешно обновлён.</span>
                   <button type="button" className="form-profile__text form-profile__text_separator" onClick={handleActiveForm}>Редактировать</button>
                   <button type="button" className="form-profile__text form-profile__text_important" onClick={onLogout}>Выйти из аккаунта</button>
                 </>

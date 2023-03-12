@@ -133,6 +133,15 @@
   text-align: center;
   width: 100%;
   visibility: hidden;
+  font-size: 11px;
+}
+
+.form-body__notification {
+  color: #3DDC84;
+}
+
+.form-body__notification_active {
+  visibility: inherit;
 }
 
 .form-body__error_submit_is-active {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from '../Form/Form';
 
-function Login({ onLoginSubmit, submitError }) {
+function Login({ onLoginSubmit, submitError, inactiveForm }) {
   const {
     register,
     formState: {
@@ -30,6 +30,7 @@ function Login({ onLoginSubmit, submitError }) {
       onHandleSubmit={handleSubmit}
       onSubmit={onLoginSubmit}
       submitError={submitError}
+      inactiveForm={inactiveForm}
     >
       <label htmlFor="email" className="form-body__label">
         E-mail
@@ -37,6 +38,7 @@ function Login({ onLoginSubmit, submitError }) {
           type="email"
           className={`form-body__input ${errors.email && 'form-body__input_error'}`}
           id="email"
+          disabled={inactiveForm}
           {...register('email', {
             required: 'Нужно ввести электронную почту',
             pattern: {
@@ -53,6 +55,7 @@ function Login({ onLoginSubmit, submitError }) {
           type="password"
           className={`form-body__input ${errors.password && 'form-body__input_error'}`}
           id="password"
+          disabled={inactiveForm}
           {...register('password', {
             required: 'Нужно ввести пароль',
             minLength: {
