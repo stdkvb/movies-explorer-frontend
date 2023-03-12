@@ -49,13 +49,13 @@ function Profile({
     api.updateUser(newName, newEmail)
       .then((response) => {
         onCurrentUser(response);
+        setIsSuccess(true);
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
         handleActiveForm();
-        setIsSuccess(true);
         onSetInactiveForm(false);
       });
   };

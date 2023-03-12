@@ -39,7 +39,6 @@ function App() {
 
   const handleLogout = () => {
     api.logoutUser()
-      .then()
       .catch((error) => console.log(error));
     localStorage.clear();
     setLoggedIn(false);
@@ -115,11 +114,11 @@ function App() {
 
   const getLimit = () => {
     if (width <= 800 && width > 400) {
-      setLimit(3);
+      setLimit(4);
     } else if (width <= 400) {
-      setLimit(5);
+      setLimit(6);
     } else {
-      setLimit(7);
+      setLimit(8);
     }
   };
 

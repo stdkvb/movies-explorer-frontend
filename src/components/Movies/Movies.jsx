@@ -28,6 +28,8 @@ function Movies(
         onSearchSubmit={onSearchSubmit}
         onHandleCheck={onHandleCheck}
         shortChecked={shortChecked}
+        onSearchValue={onSearchValue}
+        searchValue={searchValue}
       />
       {!noSearch && (
         <MoviesCardList
@@ -39,8 +41,6 @@ function Movies(
           onAddFilms={onAddFilms}
           onSave={onSave}
           savedMovies={savedMovies}
-          onSearchValue={onSearchValue}
-          searchValue={searchValue}
         />
       )}
     </>
