@@ -21,12 +21,17 @@
 
 .search__input {
     width: 100%;
+    max-width: 1060px;
     background: transparent;
     border: none;
     font-size: 28px;
     line-height: 34px;
     color: #8B8B8B;
     text-align: center;
+}
+
+.search__input:focus{
+  outline: none;
 }
 
 .search__button {
@@ -39,6 +44,21 @@
 .search__button:hover {
     cursor: pointer;
     opacity: 0.7;
+}
+
+.search__error {
+  color: #ee3465;
+  font-size: 12px;
+  line-height: 1.2;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 208px;
+  transform: translate(-50%, -50%);
+}
+
+.search__error_inactive {
+  visibility: inherit;
 }
 
 .search__filter {
@@ -55,7 +75,7 @@
     width: 34px;
     height: 14px;
     border-radius: 20px;
-    background-color: #3DDC84;
+    background-color: #565656;
     appearance: none;
     position: relative;
     cursor: pointer;
@@ -72,6 +92,10 @@
     top: 2px;
     left: 2px;
     transition: left 0.3s;
+  }
+
+  .search__filter-checkbox:checked {
+    background-color:#3DDC84;
   }
 
   .search__filter-checkbox:checked::before {

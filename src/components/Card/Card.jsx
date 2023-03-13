@@ -1,18 +1,68 @@
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import image from '../../images/cardimage.png';
 
-function Card() {
+function Card({
+  name,
+  duration,
+  images,
+  trailerLink,
+  movie,
+  onSave,
+  onDelete,
+  savedMovies,
+}) {
+  const handleSaved = () => {
+    onSave(movie);
+  };
+
+  const handleDelete = () => {
+    onDelete(movie);
+  };
+
+  const convertDuration = (value) => {
+    const hours = Math.floor(value / 60);
+    const minutes = duration % 60;
+    return hours !== 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+  };
+
+  const checkedLike = (movies) => movies.some((item) => item.movieId === movie.id);
+
   return (
-    <div className='card'>
-      <img className='card__image' src={image} alt='обложка фильма' />
-      <div className='card__text'>
-        <p className='card__title'>33 слова о дизайне</p>
-        {useLocation().pathname === '/movies' && <button className='card__save-button' type='button' />}
-        {useLocation().pathname === '/saved-movies' && <button className='card__delete-button' type='button' />}
+    <li className="movies-list__item">
+      <div className="movies__image-container">
+        <a className="movies-list__link-image" href={trailerLink} target="_blank" rel="noreferrer">
+          <img className="movies__image" src={images} alt={`Изображение фильма – ${name}`} />
+        </a>
       </div>
-      <p className='card__duration'>1ч42м</p>
-    </div>
+      <div className="movies-content__content">
+        <div>
+          <h2 className="movies-list__name"><a className="movies-list__link" href={trailerLink} target="_blank" rel="noreferrer">{name}</a></h2>
+          <p className="movies-list__duration">{convertDuration(duration)}</p>
+        </div>
+        <div>
+          {
+          useLocation().pathname === '/movies'
+          && (
+          <button
+            onClick={handleSaved}
+            type="button"
+            className={`movies-list__save ${checkedLike(savedMovies) ? 'movies-list__save_active' : ''}`}
+            aria-label="save-film"
+          />
+          )
+        }
+          {useLocation().pathname === '/saved-movies'
+            && (
+              <button
+                onClick={handleDelete}
+                type="button"
+                className="movies-list__delete"
+                aria-label="save-film"
+              />
+            )}
+        </div>
+      </div>
+    </li>
   );
 }
-
 export default Card;

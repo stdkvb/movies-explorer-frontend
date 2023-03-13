@@ -22,6 +22,7 @@
   font-weight: 500;
   font-style: normal;
   flex: 1;
+  position: relative;
 }
 
 .form-body__label {
@@ -30,6 +31,8 @@
   color: #8B8B8B;
   font-size: 10px;
   line-height: 1.2;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .form-body__label:last-of-type {
@@ -52,20 +55,25 @@
   outline: none;
 }
 
+.form-body__input_error {
+  border-bottom: 1px solid #ee3465;
+}
+
+.form-body__input_error:focus-visible {
+  border-bottom: 1px solid #ee3465;
+}
+
 .form-body__input_incorrect {
   color: #ee3465;
 }
 
 .form-body__error {
-  visibility: hidden;
   color: #ee3465;
-  margin: 6px 0 0;
   font-size: 10px;
   line-height: 1.2;
-}
-
-.form-body__error_is-active {
-  visibility: inherit;
+  position: absolute;
+  top: 71px;
+  left: 0;
 }
 
 .form-body__button {
@@ -81,6 +89,12 @@
   height: 45px;
   cursor: pointer;
   transition: opacity 0.6s;
+}
+
+.form-body__button_disabled {
+  background-color: #a0a0a0;
+  color: #c2c2c2;
+  cursor: inherit;
 }
 
 .form-body__button:hover {
@@ -111,6 +125,27 @@
 
 .form__link {
   margin: 0 0 0 6px;
+}
+
+.form-body__error_submit {
+  position: initial;
+  color: #ee3465;
+  text-align: center;
+  width: 100%;
+  visibility: hidden;
+  font-size: 11px;
+}
+
+.form-body__notification {
+  color: #3DDC84;
+}
+
+.form-body__notification_active {
+  visibility: inherit;
+}
+
+.form-body__error_submit_is-active {
+  visibility: inherit;
 }
 
 @media screen and (max-width: 1280px) {

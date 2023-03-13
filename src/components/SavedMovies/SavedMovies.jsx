@@ -1,11 +1,29 @@
+import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
+function SavedMovies(
+  {
+    savedMovies,
+    onDelete,
+    onSearchSubmit,
+    onHandleSavedMovieCheck,
+    notFound,
+    errorText,
+  },
+) {
   return (
     <>
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm
+        onSearchSubmit={onSearchSubmit}
+        onHandleSavedMovieCheck={onHandleSavedMovieCheck}
+      />
+      <MoviesCardList
+        movies={savedMovies}
+        onDelete={onDelete}
+        notFound={notFound}
+        errorText={errorText}
+      />
     </>
   );
 }
